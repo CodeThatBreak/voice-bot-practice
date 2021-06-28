@@ -4,6 +4,7 @@ const express = require("express"),
       app = express(),
       dialogflow = require("@google-cloud/dialogflow").v2
 
+const cors = require("cors");
 const credentials = JSON.parse(process.env.CREDENTIALS)
 
 const projectId =  process.env.PROJECT_ID
@@ -12,6 +13,7 @@ const languageCode = "en-US"
 app.use("",express.static(__dirname))
 app.use(express.json())
 
+app.use(cors()); 
 
 const sessionClient = new dialogflow.SessionsClient({
   projectId,
@@ -87,8 +89,6 @@ async function detectIntentandSentiment(sessionId,query) {
         }
   }
 }
-
-
 
 app.listen(process.env.PORT || 3000,()=>{
   console.log("Server is up and running.")
